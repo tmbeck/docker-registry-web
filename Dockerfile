@@ -7,12 +7,13 @@ RUN echo 'APT::Install-Recommends "false";' > /etc/apt/apt.conf.d/docker-no-reco
 
 # Install java and tomcat
 RUN     apt-get update && apt-get install -y tomcat7 openjdk-7-jdk libyaml-perl libfile-slurp-perl && \
+		apt-get install -y libapr1 libapr1-dev && \
         rm -rf /var/lib/tomcat7/webapps/* && \
         rm -rf /var/lib/apt/lists/*
 
-ENV     JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
-ENV     CATALINA_HOME /usr/share/tomcat7
-ENV     CATALINA_BASE /var/lib/tomcat7
+ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
+ENV CATALINA_HOME /usr/share/tomcat7
+ENV CATALINA_BASE /var/lib/tomcat7
 
 ENV CATALINA_OPTS=" -Djava.security.egd=file:/dev/./urandom"
 ENV PATH $CATALINA_HOME/bin:$PATH
@@ -57,3 +58,4 @@ WORKDIR $CATALINA_BASE
 VOLUME /data
 
 CMD ["start.sh"]
+

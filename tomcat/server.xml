@@ -11,6 +11,10 @@
                    URIEncoding="UTF-8"
                    redirectPort="8443"/>
 
+		<Connector port="8443" protocol="HTTP/1.1" SSLEnabled="false"
+					maxThreads="150" scheme="https" secure="true"
+					clientAuth="false" sslProtocol="TLS" />
+
         <Engine name="Catalina" defaultHost="localhost">
             <Host name="localhost" appBase="webapps"
                   unpackWARs="true" autoDeploy="false" deployOnStartup="false">

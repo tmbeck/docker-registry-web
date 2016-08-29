@@ -26,13 +26,20 @@ Do not use _registry_ as registry container name, it will break `REGISTRY_NAME` 
     docker run -d -p 5000:5000 --name registry-srv registry:2
     docker run -it -p 8080:8080 --name registry-web --link registry-srv -e REGISTRY_URL=http://registry-srv:5000/v2 -e REGISTRY_NAME=localhost:5000 hyper/docker-registry-web 
 
+#### ...with docker-registry-web and https
+	sudo docker run -it -p 8443:8443 --name registry-web --link registry-srv \
+		-v /etc/letsencrypt/live/example.com:/cert \
+		-e REGISTRY_URL=http://registry-srv:5000/v2 \
+		-e REGISTRY_NAME=localhost:5000 \
+		-e KEYSTORE_PASS=$(openssl rand -hex 32) \
+		hyper/docker-registry-web
+
 #### Connecting to docker registry with basic authentication and self-signed certificate
     docker run -it -p 8080:8080 --name registry-web --link registry-srv \
                -e REGISTRY_URL=https://registry-srv:5000/v2 \
                -e REGISTRY_TRUST_ANY_SSL=true \
                -e REGISTRY_BASIC_AUTH="YWRtaW46Y2hhbmdlbWU=" \
                -e REGISTRY_NAME=localhost:5000 hyper/docker-registry-web
-    
 
 #### No authentication, with config file
  
